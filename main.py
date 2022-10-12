@@ -1,15 +1,34 @@
 DIRS_WAYS = []
+ALLOWED_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/.1234567890'
+
+
+def get_validation(dir_way):
+    """
+    Функция валидатор
+    """
+    global ALLOWED_CHARACTERS
+    if len(dir_way) > 255:
+        raise Exception('Количество занков не должно превышать 255')
+    for character in dir_way:
+        if character not in ALLOWED_CHARACTERS:
+            raise Exception('Использованы запрещенные символы')
+    if dir_way.count('/') <= 1:
+        return '/'
+    return dir_way
 
 
 def check_files(files):
     """
-    Функция провекри корректности файлов
+    Функция проверки корректности файлов
     """
     dublicates = [number for number in files if files.count(number) > 1]
-    for dublicate in dublicates:
-        files.remove(dublicate)
-    if files:
+    if dublicates:
+        print('Найдены дубликаты имён файлов в одной папке!')
+
+        for dublicate in dublicates:
+            files.remove(dublicate)
         return files
+
     return None
 
 
@@ -62,10 +81,10 @@ def get_long_way(file_system):
     _, biggest_way = ways_counter
     trailing_file = get_file(biggest_way, file_system)
     if trailing_file:
-        biggest_way = f'/{biggest_way}/{trailing_file}'
-        return biggest_way
+        biggest_way = f'{biggest_way}/{trailing_file}'
 
-    return f'/{biggest_way}'
+    validated_b_way = get_validation(f'/{biggest_way}')
+    return validated_b_way
 
 
 if __name__ == '__main__':
@@ -74,5 +93,5 @@ if __name__ == '__main__':
     d3 = {'dir1': ['file1', 'file2', 'file2']}
     way = 'dir3/dir5/dir6/dir7'
     biggest_path = get_long_way(d1)
-    print(DIRS_WAYS)
+
     print(biggest_path)
