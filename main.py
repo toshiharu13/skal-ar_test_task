@@ -91,7 +91,7 @@ if __name__ == '__main__':
     d1 = {'dir1': {}, 'dir2': ['file1'], 'dir3': {'dir4': ['file2'], 'dir5': {'dir6': {'dir7': {}}}}}
     d2 = {'dir1': ['file1', 'file1']}
     d3 = {'dir1': ['file1', 'file2', 'file2']}
-    way = 'dir3/dir5/dir6/dir7'
+
     biggest_path = get_long_way(d1)
 
     print(biggest_path)
